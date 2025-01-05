@@ -55,7 +55,8 @@ const Counter: FC = (): ReactElement => {
             type="single"
             value={workStatus}
             onValueChange={(value) => {
-              if (value) setWorkStatus(value);
+              setWorkStatus(value);
+              setTimer(false);
             }}
             defaultValue={POMODORO.label}
           >
