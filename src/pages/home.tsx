@@ -1,5 +1,5 @@
 import Counter from "@/features/counter/counter";
-import { ReactElement, useState, useCallback } from "react";
+import { ReactElement, useState, useCallback, useEffect } from "react";
 import MainTask from "../features/task/maintTask";
 import TaskList from "../features/task/taskList";
 import { Task } from "@/interface/task";
@@ -10,9 +10,20 @@ const Home: React.FC = (): ReactElement => {
   const [taskDialogOpen, openTaskDialog] = useState<boolean>(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
+  useEffect(() => {
+    const savedTask = JSON.parse(
+      localStorage.getItem("tasks") || "[]"
+    ) as Task[];
+
+    setTask(savedTask);
+  }, []);
+
   const addTask = useCallback(
     (newTask: Task) => {
-      setTask([...tasks, newTask]);
+      const newTaskList: Task[] = [...tasks, newTask];
+
+      setTask(newTaskList);
+      localStorage.setItem("tasks", JSON.stringify(newTaskList));
     },
     [tasks]
   );
