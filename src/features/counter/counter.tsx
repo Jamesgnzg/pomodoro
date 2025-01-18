@@ -50,39 +50,37 @@ const Counter: FC = (): ReactElement => {
   return (
     <>
       <div className="block border border-gray-200 max-w-full p-6 rounded-lg">
-        <div className="flex flex-row justify-center gap-5">
-          <ToggleGroup
-            type="single"
-            value={workStatus}
-            onValueChange={(value) => {
-              setWorkStatus(value);
-              setTimer(false);
-            }}
-            defaultValue={POMODORO.label}
+        <ToggleGroup
+          type="single"
+          value={workStatus}
+          onValueChange={(value) => {
+            setWorkStatus(value);
+            setTimer(false);
+          }}
+          defaultValue={POMODORO.label}
+        >
+          <ToggleGroupItem
+            className="text-lg"
+            onClick={() => setTime(POMODORO.time)}
+            value={POMODORO.label}
           >
-            <ToggleGroupItem
-              className="text-lg"
-              onClick={() => setTime(POMODORO.time)}
-              value={POMODORO.label}
-            >
-              {POMODORO.label}
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              className="text-lg"
-              onClick={() => setTime(SHORT_BREAK.time)}
-              value={SHORT_BREAK.label}
-            >
-              {SHORT_BREAK.label}
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              className="text-lg"
-              onClick={() => setTime(LONG_BREAK.time)}
-              value={LONG_BREAK.label}
-            >
-              {LONG_BREAK.label}
-            </ToggleGroupItem>
-          </ToggleGroup>
-        </div>
+            {POMODORO.label}
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            className="text-lg"
+            onClick={() => setTime(SHORT_BREAK.time)}
+            value={SHORT_BREAK.label}
+          >
+            {SHORT_BREAK.label}
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            className="text-lg"
+            onClick={() => setTime(LONG_BREAK.time)}
+            value={LONG_BREAK.label}
+          >
+            {LONG_BREAK.label}
+          </ToggleGroupItem>
+        </ToggleGroup>
         <div className="text-center mt-5">
           <p className="text-9xl">
             {`${Math.floor(timeRemaining / 60)}`.padStart(2, "0")}:
