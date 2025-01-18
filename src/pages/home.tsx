@@ -23,7 +23,6 @@ const Home: React.FC = (): ReactElement => {
       const newTaskList: Task[] = [...tasks, newTask];
 
       setTask(newTaskList);
-      localStorage.setItem("tasks", JSON.stringify(newTaskList));
     },
     [tasks]
   );
@@ -33,6 +32,18 @@ const Home: React.FC = (): ReactElement => {
       openTaskDialog(dialogStatus);
     },
     [taskDialogOpen]
+  );
+
+  const deleteTask = useCallback(
+    (taskId: string) => {
+      const taskIndex = tasks.findIndex((task) => (task.id = taskId));
+      const updatedTasks = [...tasks];
+
+      updatedTasks.splice(taskIndex, 1);
+
+      setTask(updatedTasks);
+    },
+    [tasks]
   );
 
   const updateTaskItem = useCallback(
@@ -67,6 +78,7 @@ const Home: React.FC = (): ReactElement => {
               />
               <TaskList
                 tasks={tasks}
+                deleteTask={deleteTask}
                 selectTask={setSelectedTask}
                 openTaskDialog={updateTask}
               />

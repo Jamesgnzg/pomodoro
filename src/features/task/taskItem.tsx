@@ -2,16 +2,19 @@ import { Task } from "@/interface/task";
 import { FC, ReactElement, memo } from "react";
 import { priority } from "@/enums/priority";
 import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 
 interface TaskItemProps {
   task: Task;
   selectTask: (selectedTask: Task) => void;
+  deleteTask: (taskId: string) => void;
   openTaskDialog: (status: boolean) => void;
 }
 
 const TaskItem: FC<TaskItemProps> = ({
   task,
   selectTask,
+  deleteTask,
   openTaskDialog,
 }: TaskItemProps): ReactElement => {
   const setTaskStyle = (): string => {
@@ -45,6 +48,13 @@ const TaskItem: FC<TaskItemProps> = ({
             </h5>
             <p>{`0 / ${task.pomodoros}`}</p>
             <Button onClick={() => openTaskDialog(true)}>Update</Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => deleteTask(task.id)}
+            >
+              <Trash />
+            </Button>
           </div>
         </a>
       </div>
