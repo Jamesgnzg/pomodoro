@@ -6,21 +6,15 @@ import { Task } from "@/interface/task";
 import TaskDialog from "@/features/task/task-dialog";
 
 const Home: React.FC = (): ReactElement => {
-  const [tasks, setTask] = useState<Task[]>([]);
+  const [tasks, setTask] = useState<Task[]>(
+    JSON.parse(localStorage.getItem("tasks") || "[]")
+  );
   const [taskDialogOpen, openTaskDialog] = useState<boolean>(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   useEffect(() => {
-    if (tasks.length > 0) localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
-
-  useEffect(() => {
-    const savedTask = JSON.parse(
-      localStorage.getItem("tasks") || "[]"
-    ) as Task[];
-
-    setTask(savedTask);
-  }, []);
 
   const addTask = useCallback(
     (newTask: Task) => {

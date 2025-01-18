@@ -75,15 +75,7 @@ const TaskDialog: FC<TaskDialogProps> = ({
       note: values.note,
     };
     addTask(newTask);
-    /* const updatedTask: Task = {
-      id: "1",
-      name: values.taskname,
-      priority: values.priority,
-      completedPomodoros: 0,
-      pomodoros: values.pomodoros,
-      note: values.note,
-    };
-    updateTaskItem(updatedTask); */
+
     toggleDialog();
   };
 
