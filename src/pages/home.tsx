@@ -11,6 +11,10 @@ const Home: React.FC = (): ReactElement => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   useEffect(() => {
+    if (tasks.length > 0) localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  useEffect(() => {
     const savedTask = JSON.parse(
       localStorage.getItem("tasks") || "[]"
     ) as Task[];
