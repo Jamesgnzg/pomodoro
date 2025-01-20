@@ -62,7 +62,7 @@ const Home: React.FC = (): ReactElement => {
   return (
     <>
       <div className="max-w-full flex flex-col justify-between p-5">
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-col gap-5 md:flex-row">
           <div className="basis-[75%] gap-y-5">
             <Counter />
             <MainTask mainTask={selectedTask} />
