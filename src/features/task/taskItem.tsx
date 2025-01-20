@@ -1,5 +1,5 @@
 import { Task } from "@/interface/task";
-import { FC, ReactElement, memo } from "react";
+import { FC, ReactElement, memo, SyntheticEvent } from "react";
 import { priority } from "@/enums/priority";
 import { Button } from "@/components/ui/button";
 import { EllipsisVertical } from "lucide-react";
@@ -30,7 +30,12 @@ const TaskActions: FC<TaskActionsProps> = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" id="TaskAction" className="p-2">
+        <Button
+          variant="outline"
+          id="TaskAction"
+          className="p-2"
+          onClick={(e) => e.stopPropagation()}
+        >
           <EllipsisVertical />
         </Button>
       </PopoverTrigger>
@@ -38,7 +43,13 @@ const TaskActions: FC<TaskActionsProps> = ({
         <Button variant="outline" onClick={() => openTaskDialog(true)}>
           Update
         </Button>
-        <Button variant="destructive" onClick={() => deleteTask(taskId)}>
+        <Button
+          variant="destructive"
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteTask(taskId);
+          }}
+        >
           Delete
         </Button>
       </PopoverContent>
