@@ -2,7 +2,12 @@ import { Task } from "@/interface/task";
 import { FC, ReactElement, memo } from "react";
 import { priority } from "@/enums/priority";
 import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
+import { EllipsisVertical } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
 
 interface TaskItemProps {
   task: Task;
@@ -10,6 +15,36 @@ interface TaskItemProps {
   deleteTask: (taskId: string) => void;
   openTaskDialog: (status: boolean) => void;
 }
+
+interface TaskActionsProps {
+  taskId: string;
+  deleteTask: (taskId: string) => void;
+  openTaskDialog: (status: boolean) => void;
+}
+
+const TaskActions: FC<TaskActionsProps> = ({
+  taskId,
+  deleteTask,
+  openTaskDialog,
+}: TaskActionsProps): ReactElement => {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline" id="TaskAction" className="p-2">
+          <EllipsisVertical />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="flex flex-col gap-2 p-3 mt-2 rounded border bg-white">
+        <Button variant="outline" onClick={() => openTaskDialog(true)}>
+          Update
+        </Button>
+        <Button variant="destructive" onClick={() => deleteTask(taskId)}>
+          Delete
+        </Button>
+      </PopoverContent>
+    </Popover>
+  );
+};
 
 const TaskItem: FC<TaskItemProps> = ({
   task,
@@ -19,7 +54,7 @@ const TaskItem: FC<TaskItemProps> = ({
 }: TaskItemProps): ReactElement => {
   const setTaskStyle = (): string => {
     let cardStyle =
-      "block max-w-sm p-6 border border-l-8 border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700";
+      "mt-3 block max-w-sm p-6 border border-l-8 border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700";
     switch (task.priority) {
       case priority.LOW:
         cardStyle = `${cardStyle} border-l-green-200`;
@@ -40,23 +75,18 @@ const TaskItem: FC<TaskItemProps> = ({
 
   return (
     <>
-      <div className="mt-3">
-        <a href="#" className={setTaskStyle()} onClick={() => selectTask(task)}>
-          <div className="flex justify-between">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight truncate text-gray-900 dark:text-white">
-              {task.name}
-            </h5>
-            <p>{`0 / ${task.pomodoros}`}</p>
-            <Button onClick={() => openTaskDialog(true)}>Update</Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => deleteTask(task.id)}
-            >
-              <Trash />
-            </Button>
-          </div>
-        </a>
+      <div className={setTaskStyle()} onClick={() => selectTask(task)}>
+        <div className="flex justify-between">
+          <h5 className="mb-2 text-2xl font-bold tracking-tight truncate text-gray-900 dark:text-white">
+            {task.name}
+          </h5>
+          <p>{`0 / ${task.pomodoros}`}</p>
+          <TaskActions
+            taskId={task.id}
+            deleteTask={deleteTask}
+            openTaskDialog={openTaskDialog}
+          />
+        </div>
       </div>
     </>
   );
