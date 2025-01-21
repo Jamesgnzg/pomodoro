@@ -34,7 +34,7 @@ const Home: React.FC = (): ReactElement => {
 
   const deleteTask = useCallback(
     (taskId: string) => {
-      const taskIndex = tasks.findIndex((task) => (task.id = taskId));
+      const taskIndex = tasks.findIndex((task) => task.id == taskId);
       const updatedTasks = [...tasks];
 
       updatedTasks.splice(taskIndex, 1);
