@@ -1,5 +1,5 @@
 import { Task } from "@/interface/task";
-import { FC, ReactElement, memo, SyntheticEvent } from "react";
+import { FC, ReactElement, memo } from "react";
 import { priority } from "@/enums/priority";
 import { Button } from "@/components/ui/button";
 import { EllipsisVertical } from "lucide-react";

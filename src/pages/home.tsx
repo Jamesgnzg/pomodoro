@@ -40,6 +40,7 @@ const Home: React.FC = (): ReactElement => {
       updatedTasks.splice(taskIndex, 1);
 
       setTask(updatedTasks);
+      setSelectedTask(null);
     },
     [tasks]
   );
