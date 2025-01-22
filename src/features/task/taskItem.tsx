@@ -2,7 +2,7 @@ import { Task } from "@/interface/task";
 import { FC, ReactElement, memo } from "react";
 import { priority } from "@/enums/priority";
 import { Button } from "@/components/ui/button";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, Pencil, Trash } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -27,6 +27,9 @@ const TaskActions: FC<TaskActionsProps> = ({
   deleteTask,
   openTaskDialog,
 }: TaskActionsProps): ReactElement => {
+  const menuItemStyling =
+    "py-2 px-3 flex gap-2 cursor-pointer hover:bg-gray-100";
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -39,19 +42,27 @@ const TaskActions: FC<TaskActionsProps> = ({
           <EllipsisVertical />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-2 p-3 mt-2 rounded border bg-white">
-        <Button variant="outline" onClick={() => openTaskDialog(true)}>
+      <PopoverContent className="flex flex-col gap-2 mt-2 rounded border bg-white min-w-32">
+        <div
+          className={menuItemStyling}
+          onClick={(e) => {
+            e.stopPropagation();
+            openTaskDialog(true);
+          }}
+        >
+          <Pencil size={15} className="mt-1" />
           Update
-        </Button>
-        <Button
-          variant="destructive"
+        </div>
+        <div
+          className={menuItemStyling}
           onClick={(e) => {
             e.stopPropagation();
             deleteTask(taskId);
           }}
         >
+          <Trash size={15} className="mt-1" />
           Delete
-        </Button>
+        </div>
       </PopoverContent>
     </Popover>
   );
@@ -65,7 +76,7 @@ const TaskItem: FC<TaskItemProps> = ({
 }: TaskItemProps): ReactElement => {
   const setTaskStyle = (): string => {
     let cardStyle =
-      "mt-3 block max-w-sm p-6 border border-l-8 border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700";
+      "mt-3 block max-w-sm p-6 border border-l-8 border-gray-200 rounded-lg shadow cursor-pointer";
     switch (task.priority) {
       case priority.LOW:
         cardStyle = `${cardStyle} border-l-green-200`;
