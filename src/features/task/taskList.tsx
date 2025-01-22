@@ -1,20 +1,10 @@
+import { useTasks } from "@/context/Task-context";
 import { ReactElement } from "react";
-import { Task } from "@/interface/task";
+
 import TaskItem from "./taskItem";
 
-interface TaskListProps {
-  tasks: Task[];
-  selectTask: (selectedTask: Task) => void;
-  deleteTask: (taskId: string) => void;
-  openTaskDialog: (status: boolean) => void;
-}
-
-const TaskList: React.FC<TaskListProps> = ({
-  tasks,
-  selectTask,
-  deleteTask,
-  openTaskDialog,
-}): ReactElement => {
+const TaskList: React.FC = (): ReactElement => {
+  const { tasks, selectTask, deleteTask, updateTask } = useTasks();
   return (
     <>
       <div className="flex flex-col scroll-smooth border border-1 rounded-lg p-5 min-h-screen">
@@ -24,7 +14,7 @@ const TaskList: React.FC<TaskListProps> = ({
             task={task}
             deleteTask={deleteTask}
             selectTask={selectTask}
-            openTaskDialog={openTaskDialog}
+            openTaskDialog={updateTask}
           />
         ))}
       </div>

@@ -26,6 +26,7 @@ import { FC, ReactElement, useState } from "react";
 import { Task } from "@/interface/task";
 import { priority } from "@/enums/priority";
 import { useRandomId } from "@/hooks/random-id";
+import { useTasks } from "@/context/Task-context";
 
 const formSchema = z.object({
   taskname: z.string().min(2, {
@@ -38,18 +39,9 @@ const formSchema = z.object({
   note: z.string(),
 });
 
-interface TaskDialogProps {
-  dialogOpen?: boolean;
-  addTask(newTask: Task): void;
-  updateTaskItem(id: string, field: keyof Task, value: any): void;
-}
-
-const TaskDialog: FC<TaskDialogProps> = ({
-  dialogOpen,
-  addTask,
-  updateTaskItem,
-}: TaskDialogProps): ReactElement => {
-  const [open = false, setOpen] = useState(dialogOpen);
+const TaskDialog: FC = (): ReactElement => {
+  const { taskDialogOpen, addTask } = useTasks();
+  const [open = false, setOpen] = useState(taskDialogOpen);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
