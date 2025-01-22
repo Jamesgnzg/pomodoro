@@ -92,7 +92,7 @@ const TaskItem: FC<TaskItemProps> = ({
             {task.name}
           </h5>
           <div className="flex gap-4">
-            <p className="pt-2">{`0 / ${task.pomodoros}`}</p>
+            <p className="pt-2">{`${task.completedPomodoros} / ${task.pomodoros}`}</p>
             <TaskActions
               taskId={task.id}
               deleteTask={deleteTask}

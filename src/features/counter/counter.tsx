@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { FC, ReactElement, useState, useEffect } from "react";
 import { timeSettings } from "@/enums/time-settings";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useTasks } from "@/context/Task-context";
 
 const Counter: FC = (): ReactElement => {
+  const { selectedTask, updateTaskItem } = useTasks();
   const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
   const [timerRunning, setTimer] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(POMODORO.time);
@@ -20,6 +22,14 @@ const Counter: FC = (): ReactElement => {
     } else {
       setTimeRemaining(POMODORO.time);
       setWorkStatus(POMODORO.label);
+    }
+
+    if (selectedTask) {
+      updateTaskItem(
+        selectedTask.id,
+        "completedPomodoros",
+        selectedTask.completedPomodoros + 1
+      );
     }
 
     setTimer(false);

@@ -11,7 +11,7 @@ const MainTask: FC = (): ReactElement => {
           <div>
             <div className="flex justify-between">
               <p className="text-5xl font-bold">{selectedTask?.name}</p>
-              <p className="text-5xl font-bold">{`0 / ${selectedTask?.pomodoros}`}</p>
+              <p className="text-5xl font-bold">{`${selectedTask.completedPomodoros} / ${selectedTask?.pomodoros}`}</p>
             </div>
             <br />
             <p className="text-3xl font-semibold">{selectedTask?.note}</p>
