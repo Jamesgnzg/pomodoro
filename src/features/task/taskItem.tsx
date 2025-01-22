@@ -91,12 +91,14 @@ const TaskItem: FC<TaskItemProps> = ({
           <h5 className="mb-2 text-2xl font-bold tracking-tight truncate text-gray-900 dark:text-white">
             {task.name}
           </h5>
-          <p>{`0 / ${task.pomodoros}`}</p>
-          <TaskActions
-            taskId={task.id}
-            deleteTask={deleteTask}
-            openTaskDialog={openTaskDialog}
-          />
+          <div className="flex gap-4">
+            <p className="pt-2">{`0 / ${task.pomodoros}`}</p>
+            <TaskActions
+              taskId={task.id}
+              deleteTask={deleteTask}
+              openTaskDialog={openTaskDialog}
+            />
+          </div>
         </div>
       </div>
     </>
