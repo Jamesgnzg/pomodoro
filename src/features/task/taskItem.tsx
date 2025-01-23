@@ -67,7 +67,7 @@ const TaskItem: FC<TaskItemProps> = ({ task }: TaskItemProps): ReactElement => {
   const { selectTask } = useTasks();
   const setTaskStyle = (): string => {
     let cardStyle =
-      "mt-3 block max-w-sm p-6 border border-l-8 border-gray-200 rounded-lg shadow cursor-pointer";
+      "mt-3 block max-w-sm p-6 border border-l-8 border-gray-200 rounded-lg shadow cursor-pointer transition delay-150 duration-500 ease-in-outbg-green-300 transform hover:-translate-y-1 hover:scale-110 ";
     switch (task.priority) {
       case priority.LOW:
         cardStyle = `${cardStyle} border-l-green-200`;
