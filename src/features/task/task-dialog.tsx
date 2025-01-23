@@ -40,8 +40,8 @@ const formSchema = z.object({
 });
 
 const TaskDialog: FC = (): ReactElement => {
-  const { taskDialogOpen, addTask } = useTasks();
-  const [open = false, setOpen] = useState(taskDialogOpen);
+  const { taskDialogOpen, addTask, openTaskDialog, closeTaskDialog } =
+    useTasks();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,8 +53,12 @@ const TaskDialog: FC = (): ReactElement => {
   });
 
   const toggleDialog = () => {
-    form.reset();
-    setOpen(!open);
+    if (taskDialogOpen) {
+      form.reset();
+      closeTaskDialog();
+    } else {
+      openTaskDialog();
+    }
   };
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -72,7 +76,7 @@ const TaskDialog: FC = (): ReactElement => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={toggleDialog}>
+    <Dialog open={taskDialogOpen} onOpenChange={toggleDialog}>
       <DialogTrigger asChild>
         <Button variant="outline">Add Task</Button>
       </DialogTrigger>

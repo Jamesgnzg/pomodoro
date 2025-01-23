@@ -18,7 +18,8 @@ type TTaskContextType = {
   selectedTask: Task | null;
   addTask: (newTask: Task) => void;
   selectTask: (task: Task) => void;
-  updateTask: (dialogStatus: boolean) => void;
+  openTaskDialog: () => void;
+  closeTaskDialog: () => void;
   deleteTask: (taskId: string) => void;
   updateTaskItem: <T extends keyof Task>(
     id: string,
@@ -33,7 +34,7 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
   const [tasks, setTask] = useState<Task[]>(
     JSON.parse(localStorage.getItem("tasks") || "[]")
   );
-  const [taskDialogOpen, openTaskDialog] = useState<boolean>(false);
+  const [taskDialogOpen, setTaskDialog] = useState<boolean>(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   useEffect(() => {
@@ -56,12 +57,13 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
     [tasks]
   );
 
-  const updateTask = useCallback(
-    (dialogStatus: boolean) => {
-      openTaskDialog(dialogStatus);
-    },
-    [taskDialogOpen]
-  );
+  const openTaskDialog = useCallback(() => {
+    setTaskDialog(true);
+  }, [taskDialogOpen]);
+
+  const closeTaskDialog = useCallback(() => {
+    setTaskDialog(false);
+  }, [taskDialogOpen]);
 
   const deleteTask = useCallback(
     (taskId: string) => {
@@ -99,7 +101,8 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
         selectedTask,
         addTask,
         selectTask,
-        updateTask,
+        openTaskDialog,
+        closeTaskDialog,
         deleteTask,
         updateTaskItem,
       }}

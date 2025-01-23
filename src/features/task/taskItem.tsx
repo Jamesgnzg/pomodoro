@@ -8,27 +8,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
+import { useTasks } from "@/context/Task-context";
 
 interface TaskItemProps {
   task: Task;
-  selectTask: (selectedTask: Task) => void;
-  deleteTask: (taskId: string) => void;
-  openTaskDialog: (status: boolean) => void;
 }
 
 interface TaskActionsProps {
   taskId: string;
-  deleteTask: (taskId: string) => void;
-  openTaskDialog: (status: boolean) => void;
 }
 
 const TaskActions: FC<TaskActionsProps> = ({
   taskId,
-  deleteTask,
-  openTaskDialog,
 }: TaskActionsProps): ReactElement => {
+  const { deleteTask, openTaskDialog } = useTasks();
   const menuItemStyling =
-    "py-2 px-3 flex gap-2 cursor-pointer hover:bg-gray-100";
+    "flex gap-2 py-2 px-3 cursor-pointer hover:bg-gray-100";
 
   return (
     <Popover>
@@ -47,7 +42,7 @@ const TaskActions: FC<TaskActionsProps> = ({
           className={menuItemStyling}
           onClick={(e) => {
             e.stopPropagation();
-            openTaskDialog(true);
+            openTaskDialog();
           }}
         >
           <Pencil size={15} className="mt-1" />
@@ -60,7 +55,7 @@ const TaskActions: FC<TaskActionsProps> = ({
             deleteTask(taskId);
           }}
         >
-          <Trash size={15} className="mt-1" />
+          <Trash size={15} className="mt-[3.2px]" />
           Delete
         </div>
       </PopoverContent>
@@ -68,12 +63,8 @@ const TaskActions: FC<TaskActionsProps> = ({
   );
 };
 
-const TaskItem: FC<TaskItemProps> = ({
-  task,
-  selectTask,
-  deleteTask,
-  openTaskDialog,
-}: TaskItemProps): ReactElement => {
+const TaskItem: FC<TaskItemProps> = ({ task }: TaskItemProps): ReactElement => {
+  const { selectTask } = useTasks();
   const setTaskStyle = (): string => {
     let cardStyle =
       "mt-3 block max-w-sm p-6 border border-l-8 border-gray-200 rounded-lg shadow cursor-pointer";
@@ -104,11 +95,7 @@ const TaskItem: FC<TaskItemProps> = ({
           </h5>
           <div className="flex gap-4">
             <p className="pt-2">{`${task.completedPomodoros} / ${task.pomodoros}`}</p>
-            <TaskActions
-              taskId={task.id}
-              deleteTask={deleteTask}
-              openTaskDialog={openTaskDialog}
-            />
+            <TaskActions taskId={task.id} />
           </div>
         </div>
       </div>
