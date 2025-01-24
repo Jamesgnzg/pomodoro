@@ -10,7 +10,7 @@ const Counter: FC = (): ReactElement => {
   const [timerRunning, setTimer] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(POMODORO.time);
   const [workStatus, setWorkStatus] = useState<string>(POMODORO.label);
-  const [bgColor, setBgColor] = useState<string>("#ba4949");
+  const [bgColor, setBgColor] = useState<string>(POMODORO.color);
 
   const setTime = (time: number): void => {
     setTimeRemaining(time);
