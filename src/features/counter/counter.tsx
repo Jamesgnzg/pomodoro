@@ -10,6 +10,7 @@ const Counter: FC = (): ReactElement => {
   const [timerRunning, setTimer] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(POMODORO.time);
   const [workStatus, setWorkStatus] = useState<string>(POMODORO.label);
+  const [bgColor, setBgColor] = useState<string>("#ba4949");
 
   const setTime = (time: number): void => {
     setTimeRemaining(time);
@@ -57,6 +58,10 @@ const Counter: FC = (): ReactElement => {
     }
   }, [timerRunning, timeRemaining]);
 
+  useEffect(() => {
+    document.body.style.backgroundColor = bgColor;
+  }, [bgColor]);
+
   return (
     <>
       <div className="block border border-gray-200 max-w-full p-6 rounded-lg">
@@ -70,29 +75,38 @@ const Counter: FC = (): ReactElement => {
           defaultValue={POMODORO.label}
         >
           <ToggleGroupItem
-            className="text-lg"
-            onClick={() => setTime(POMODORO.time)}
+            className="text-lg text-white"
+            onClick={() => {
+              setBgColor(POMODORO.color);
+              setTime(POMODORO.time);
+            }}
             value={POMODORO.label}
           >
             {POMODORO.label}
           </ToggleGroupItem>
           <ToggleGroupItem
-            className="text-lg"
-            onClick={() => setTime(SHORT_BREAK.time)}
+            className="text-lg text-white"
+            onClick={() => {
+              setBgColor(SHORT_BREAK.color);
+              setTime(SHORT_BREAK.time);
+            }}
             value={SHORT_BREAK.label}
           >
             {SHORT_BREAK.label}
           </ToggleGroupItem>
           <ToggleGroupItem
-            className="text-lg"
-            onClick={() => setTime(LONG_BREAK.time)}
+            className="text-lg text-white"
+            onClick={() => {
+              setBgColor(LONG_BREAK.color);
+              setTime(LONG_BREAK.time);
+            }}
             value={LONG_BREAK.label}
           >
             {LONG_BREAK.label}
           </ToggleGroupItem>
         </ToggleGroup>
         <div className="text-center mt-5">
-          <p className="text-9xl">
+          <p className="text-9xl text-white">
             {`${Math.floor(timeRemaining / 60)}`.padStart(2, "0")}:
             {`${timeRemaining % 60}`.padStart(2, "0")}
           </p>
@@ -100,14 +114,14 @@ const Counter: FC = (): ReactElement => {
             <div>
               <Button
                 variant="secondary"
-                className="mt-10 min-w-52 min-h-16 text-4xl"
+                className="mt-10 min-w-52 min-h-16 text-4xl text-[#ba4949]"
                 onClick={() => setTimer(false)}
               >
                 PAUSE
               </Button>
               <Button
                 variant="secondary"
-                className="ml-5 mt-10 min-w-52 min-h-16 text-4xl"
+                className="ml-5 mt-10 min-w-52 min-h-16 text-4xl text-[#ba4949]"
                 onClick={() => completeTimer()}
               >
                 STOP
@@ -116,7 +130,7 @@ const Counter: FC = (): ReactElement => {
           ) : (
             <Button
               variant="secondary"
-              className="mt-10 min-w-52 min-h-16 text-4xl"
+              className="mt-10 min-w-52 min-h-16 text-4xl text-[#ba4949]"
               onClick={() => setTimer(true)}
             >
               START

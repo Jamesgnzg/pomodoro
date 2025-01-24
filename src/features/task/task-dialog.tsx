@@ -78,7 +78,9 @@ const TaskDialog: FC = (): ReactElement => {
   return (
     <Dialog open={taskDialogOpen} onOpenChange={toggleDialog}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Task</Button>
+        <Button variant="outline" className="text-[#ba4949]">
+          Add Task
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

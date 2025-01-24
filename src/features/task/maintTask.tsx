@@ -6,7 +6,7 @@ const MainTask: FC = (): ReactElement => {
 
   return (
     <>
-      <div className="p-6 bg-white">
+      <div className="p-6 mt-1 text-white">
         {selectedTask ? (
           <div>
             <div className="flex justify-between">
