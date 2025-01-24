@@ -7,6 +7,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Portal,
 } from "@radix-ui/react-popover";
 import { useTasks } from "@/context/Task-context";
 
@@ -37,28 +38,33 @@ const TaskActions: FC<TaskActionsProps> = ({
           <EllipsisVertical />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col mt-2 rounded border bg-white">
-        <div
-          className={menuItemStyling}
-          onClick={(e) => {
-            e.stopPropagation();
-            openTaskDialog();
-          }}
+      <Portal>
+        <PopoverContent
+          className="flex flex-col mt-2 rounded border bg-white"
+          sideOffset={5}
         >
-          <Pencil size={15} className="mt-1" />
-          Update
-        </div>
-        <div
-          className={menuItemStyling}
-          onClick={(e) => {
-            e.stopPropagation();
-            deleteTask(taskId);
-          }}
-        >
-          <Trash size={15} className="mt-[3.2px]" />
-          Delete
-        </div>
-      </PopoverContent>
+          <div
+            className={menuItemStyling}
+            onClick={(e) => {
+              e.stopPropagation();
+              openTaskDialog();
+            }}
+          >
+            <Pencil size={15} className="mt-1" />
+            Update
+          </div>
+          <div
+            className={menuItemStyling}
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteTask(taskId);
+            }}
+          >
+            <Trash size={15} className="mt-[3.2px]" />
+            Delete
+          </div>
+        </PopoverContent>
+      </Portal>
     </Popover>
   );
 };
