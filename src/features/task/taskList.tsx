@@ -7,7 +7,7 @@ const TaskList: React.FC = (): ReactElement => {
   const { tasks } = useTasks();
   return (
     <>
-      <div className="flex flex-col scroll-smooth border border-1 rounded-lg p-5 min-h-screen">
+      <div className="flex flex-col scroll-smooth rounded-lg min-h-screen">
         {tasks.map((task, index) => (
           <TaskItem key={index} task={task} />
         ))}

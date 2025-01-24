@@ -64,7 +64,7 @@ const Counter: FC = (): ReactElement => {
 
   return (
     <>
-      <div className="block border border-gray-200 max-w-full p-6 rounded-lg">
+      <div className="block max-w-full p-6 rounded-lg bg-bgColor">
         <ToggleGroup
           type="single"
           value={workStatus}
@@ -114,14 +114,14 @@ const Counter: FC = (): ReactElement => {
             <div>
               <Button
                 variant="secondary"
-                className="mt-10 min-w-52 min-h-16 text-4xl text-[#ba4949]"
+                className="mt-10 min-w-52 min-h-16 text-4xl text-main"
                 onClick={() => setTimer(false)}
               >
                 PAUSE
               </Button>
               <Button
                 variant="secondary"
-                className="ml-5 mt-10 min-w-52 min-h-16 text-4xl text-[#ba4949]"
+                className="ml-5 mt-10 min-w-52 min-h-16 text-4xl text-main"
                 onClick={() => completeTimer()}
               >
                 STOP
@@ -130,7 +130,7 @@ const Counter: FC = (): ReactElement => {
           ) : (
             <Button
               variant="secondary"
-              className="mt-10 min-w-52 min-h-16 text-4xl text-[#ba4949]"
+              className="mt-10 min-w-52 min-h-16 text-4xl text-main"
               onClick={() => setTimer(true)}
             >
               START

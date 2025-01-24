@@ -37,7 +37,7 @@ const TaskActions: FC<TaskActionsProps> = ({
           <EllipsisVertical />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-2 mt-2 rounded border bg-white min-w-32">
+      <PopoverContent className="flex flex-col mt-2 rounded border bg-white">
         <div
           className={menuItemStyling}
           onClick={(e) => {
@@ -67,7 +67,7 @@ const TaskItem: FC<TaskItemProps> = ({ task }: TaskItemProps): ReactElement => {
   const { selectTask } = useTasks();
   const setTaskStyle = (): string => {
     let cardStyle =
-      "mt-3 block max-w-sm p-6 border border-l-8 border-gray-200 bg-white rounded-lg shadow cursor-pointer transition delay-150 duration-500 ease-in-outbg-green-300 transform hover:-translate-y-1 hover:scale-110 ";
+      "mt-3 block max-w-sm p-6 border border-l-8 bg-white rounded-md shadow cursor-pointer transition delay-150 duration-500 ease-in-outbg-green-300 transform hover:-translate-y-1 hover:scale-110 ";
     switch (task.priority) {
       case priority.LOW:
         cardStyle = `${cardStyle} border-l-green-200`;
