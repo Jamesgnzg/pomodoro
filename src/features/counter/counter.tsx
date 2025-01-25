@@ -4,13 +4,35 @@ import { timeSettings } from "@/enums/time-settings";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useTasks } from "@/context/Task-context";
 
+interface ICounterButtonProps {
+  textColor: string;
+  label: string;
+  updateTimer: () => void;
+}
+
+const CounterButton: FC<ICounterButtonProps> = ({
+  textColor,
+  label,
+  updateTimer,
+}: ICounterButtonProps): ReactElement => {
+  return (
+    <Button
+      variant="secondary"
+      className={`mt-10 min-w-52 min-h-16 text-4xl ${textColor}`}
+      onClick={() => updateTimer()}
+    >
+      {label}
+    </Button>
+  );
+};
+
 const Counter: FC = (): ReactElement => {
   const { selectedTask, updateTaskItem } = useTasks();
   const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
   const [timerRunning, setTimer] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(POMODORO.time);
   const [workStatus, setWorkStatus] = useState<string>(POMODORO.label);
-  const [bgColor, setBgColor] = useState<string>(POMODORO.color);
+  const [colorTheme, setColorTheme] = useState<string>(POMODORO.color);
 
   const setTime = (time: number): void => {
     setTimeRemaining(time);
@@ -59,8 +81,8 @@ const Counter: FC = (): ReactElement => {
   }, [timerRunning, timeRemaining]);
 
   useEffect(() => {
-    document.body.style.backgroundColor = bgColor;
-  }, [bgColor]);
+    document.body.style.backgroundColor = colorTheme;
+  }, [colorTheme]);
 
   return (
     <>
@@ -77,7 +99,7 @@ const Counter: FC = (): ReactElement => {
           <ToggleGroupItem
             className="text-lg text-white"
             onClick={() => {
-              setBgColor(POMODORO.color);
+              setColorTheme(POMODORO.color);
               setTime(POMODORO.time);
             }}
             value={POMODORO.label}
@@ -87,7 +109,7 @@ const Counter: FC = (): ReactElement => {
           <ToggleGroupItem
             className="text-lg text-white"
             onClick={() => {
-              setBgColor(SHORT_BREAK.color);
+              setColorTheme(SHORT_BREAK.color);
               setTime(SHORT_BREAK.time);
             }}
             value={SHORT_BREAK.label}
@@ -97,7 +119,7 @@ const Counter: FC = (): ReactElement => {
           <ToggleGroupItem
             className="text-lg text-white"
             onClick={() => {
-              setBgColor(LONG_BREAK.color);
+              setColorTheme(LONG_BREAK.color);
               setTime(LONG_BREAK.time);
             }}
             value={LONG_BREAK.label}
@@ -111,30 +133,24 @@ const Counter: FC = (): ReactElement => {
             {`${timeRemaining % 60}`.padStart(2, "0")}
           </p>
           {timerRunning ? (
-            <div>
-              <Button
-                variant="secondary"
-                className="mt-10 min-w-52 min-h-16 text-4xl text-main"
-                onClick={() => setTimer(false)}
-              >
-                PAUSE
-              </Button>
-              <Button
-                variant="secondary"
-                className="ml-5 mt-10 min-w-52 min-h-16 text-4xl text-main"
-                onClick={() => completeTimer()}
-              >
-                STOP
-              </Button>
+            <div className="flex gap-5">
+              <CounterButton
+                label="PAUSE"
+                textColor={`text-[${colorTheme}]`}
+                updateTimer={() => setTimer(false)}
+              />
+              <CounterButton
+                label="STOP"
+                textColor={`text-[${colorTheme}]`}
+                updateTimer={() => completeTimer}
+              />
             </div>
           ) : (
-            <Button
-              variant="secondary"
-              className="mt-10 min-w-52 min-h-16 text-4xl text-main"
-              onClick={() => setTimer(true)}
-            >
-              START
-            </Button>
+            <CounterButton
+              label="START"
+              textColor={`text-[${colorTheme}]`}
+              updateTimer={() => setTimer(true)}
+            />
           )}
         </div>
       </div>
