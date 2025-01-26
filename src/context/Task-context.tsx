@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { timeSettings } from "../enums/time-settings";
 
 interface ITaskContextProps {
   children: ReactNode;
@@ -16,6 +17,7 @@ type TTaskContextType = {
   tasks: Task[];
   taskDialogOpen: boolean;
   selectedTask: Task | null;
+  colorTheme: string;
   addTask: (newTask: Task) => void;
   selectTask: (task: Task) => void;
   openTaskDialog: () => void;
@@ -26,16 +28,23 @@ type TTaskContextType = {
     field: T,
     value: any
   ) => void;
+  updateColorTheme: (colorTheme: string) => void;
 };
 
 const TaskContext = createContext<TTaskContextType>(null!);
 
 export const TaskContextProvider = ({ children }: ITaskContextProps) => {
+  const { POMODORO } = timeSettings;
   const [tasks, setTask] = useState<Task[]>(
     JSON.parse(localStorage.getItem("tasks") || "[]")
   );
   const [taskDialogOpen, setTaskDialog] = useState<boolean>(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [colorTheme, setColorTheme] = useState<string>(POMODORO.color);
+
+  useEffect(() => {
+    document.body.style.backgroundColor = colorTheme;
+  }, [colorTheme]);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -93,18 +102,24 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
     [tasks]
   );
 
+  const updateColorTheme = (color: string) => {
+    setColorTheme(color);
+  };
+
   return (
     <TaskContext.Provider
       value={{
         tasks,
         taskDialogOpen,
         selectedTask,
+        colorTheme,
         addTask,
         selectTask,
         openTaskDialog,
         closeTaskDialog,
         deleteTask,
         updateTaskItem,
+        updateColorTheme,
       }}
     >
       {children}

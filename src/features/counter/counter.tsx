@@ -27,12 +27,12 @@ const CounterButton: FC<ICounterButtonProps> = ({
 };
 
 const Counter: FC = (): ReactElement => {
-  const { selectedTask, updateTaskItem } = useTasks();
+  const { colorTheme, selectedTask, updateTaskItem, updateColorTheme } =
+    useTasks();
   const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
   const [timerRunning, setTimer] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(POMODORO.time);
   const [workStatus, setWorkStatus] = useState<string>(POMODORO.label);
-  const [colorTheme, setColorTheme] = useState<string>(POMODORO.color);
 
   const setTime = (time: number): void => {
     setTimeRemaining(time);
@@ -80,10 +80,6 @@ const Counter: FC = (): ReactElement => {
     }
   }, [timerRunning, timeRemaining]);
 
-  useEffect(() => {
-    document.body.style.backgroundColor = colorTheme;
-  }, [colorTheme]);
-
   return (
     <>
       <div className="block max-w-full p-6 rounded-lg bg-bgColor">
@@ -99,7 +95,7 @@ const Counter: FC = (): ReactElement => {
           <ToggleGroupItem
             className="text-lg text-white"
             onClick={() => {
-              setColorTheme(POMODORO.color);
+              updateColorTheme(POMODORO.color);
               setTime(POMODORO.time);
             }}
             value={POMODORO.label}
@@ -109,7 +105,7 @@ const Counter: FC = (): ReactElement => {
           <ToggleGroupItem
             className="text-lg text-white"
             onClick={() => {
-              setColorTheme(SHORT_BREAK.color);
+              updateColorTheme(SHORT_BREAK.color);
               setTime(SHORT_BREAK.time);
             }}
             value={SHORT_BREAK.label}
@@ -119,7 +115,7 @@ const Counter: FC = (): ReactElement => {
           <ToggleGroupItem
             className="text-lg text-white"
             onClick={() => {
-              setColorTheme(LONG_BREAK.color);
+              updateColorTheme(LONG_BREAK.color);
               setTime(LONG_BREAK.time);
             }}
             value={LONG_BREAK.label}
