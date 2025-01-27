@@ -21,10 +21,12 @@ interface ITaskContextProps {
 
 type TTaskContextType = {
   tasks: Task[];
+  timerRunning: boolean;
   taskDialogOpen: boolean;
   selectedTask: Task | null;
   colorTheme: string;
   addTask: (newTask: Task) => void;
+  setTimer: (timerStatus: boolean) => void;
   selectTask: (task: Task) => void;
   openTaskDialog: () => void;
   closeTaskDialog: () => void;
@@ -44,6 +46,7 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
   const [tasks, setTask] = useState<Task[]>(
     JSON.parse(localStorage.getItem("tasks") || "[]")
   );
+  const [timerRunning, setTimer] = useState<boolean>(false);
   const [taskDialogOpen, setTaskDialog] = useState<boolean>(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [colorTheme, setColorTheme] = useState<TColorTheme>(POMODORO.color);
@@ -137,10 +140,12 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
     <TaskContext.Provider
       value={{
         tasks,
+        timerRunning,
         taskDialogOpen,
         selectedTask,
         colorTheme,
         addTask,
+        setTimer,
         selectTask,
         openTaskDialog,
         closeTaskDialog,

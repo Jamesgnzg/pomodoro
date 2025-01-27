@@ -27,9 +27,14 @@ const CounterButton: FC<ICounterButtonProps> = ({
 };
 
 const Counter: FC = (): ReactElement => {
-  const { selectedTask, updateTaskItem, updateColorTheme } = useTasks();
+  const {
+    timerRunning,
+    selectedTask,
+    setTimer,
+    updateTaskItem,
+    updateColorTheme,
+  } = useTasks();
   const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
-  const [timerRunning, setTimer] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(POMODORO.time);
   const [workStatus, setWorkStatus] = useState<string>(POMODORO.label);
 
@@ -122,7 +127,7 @@ const Counter: FC = (): ReactElement => {
             {LONG_BREAK.label}
           </ToggleGroupItem>
         </ToggleGroup>
-        <div className="text-center mt-5">
+        <div className="flex flex-col text-center items-center mt-5">
           <p className="text-9xl text-white">
             {`${Math.floor(timeRemaining / 60)}`.padStart(2, "0")}:
             {`${timeRemaining % 60}`.padStart(2, "0")}
@@ -133,7 +138,7 @@ const Counter: FC = (): ReactElement => {
                 label="PAUSE"
                 updateTimer={() => setTimer(false)}
               />
-              <CounterButton label="STOP" updateTimer={() => completeTimer} />
+              <CounterButton label="STOP" updateTimer={() => completeTimer()} />
             </div>
           ) : (
             <CounterButton label="START" updateTimer={() => setTimer(true)} />
