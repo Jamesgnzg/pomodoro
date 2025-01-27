@@ -5,20 +5,20 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useTasks } from "@/context/Task-context";
 
 interface ICounterButtonProps {
-  textColor: string;
   label: string;
   updateTimer: () => void;
 }
 
 const CounterButton: FC<ICounterButtonProps> = ({
-  textColor,
   label,
   updateTimer,
 }: ICounterButtonProps): ReactElement => {
+  const { setTextClass } = useTasks();
+
   return (
     <Button
       variant="secondary"
-      className={`mt-10 min-w-52 min-h-16 text-4xl ${textColor}`}
+      className={`mt-10 min-w-52 min-h-16 text-4xl ${setTextClass()}`}
       onClick={() => updateTimer()}
     >
       {label}
@@ -27,8 +27,7 @@ const CounterButton: FC<ICounterButtonProps> = ({
 };
 
 const Counter: FC = (): ReactElement => {
-  const { colorTheme, selectedTask, updateTaskItem, updateColorTheme } =
-    useTasks();
+  const { selectedTask, updateTaskItem, updateColorTheme } = useTasks();
   const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
   const [timerRunning, setTimer] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(POMODORO.time);
@@ -132,21 +131,12 @@ const Counter: FC = (): ReactElement => {
             <div className="flex gap-5">
               <CounterButton
                 label="PAUSE"
-                textColor={`text-[${colorTheme}]`}
                 updateTimer={() => setTimer(false)}
               />
-              <CounterButton
-                label="STOP"
-                textColor={`text-[${colorTheme}]`}
-                updateTimer={() => completeTimer}
-              />
+              <CounterButton label="STOP" updateTimer={() => completeTimer} />
             </div>
           ) : (
-            <CounterButton
-              label="START"
-              textColor={`text-[${colorTheme}]`}
-              updateTimer={() => setTimer(true)}
-            />
+            <CounterButton label="START" updateTimer={() => setTimer(true)} />
           )}
         </div>
       </div>

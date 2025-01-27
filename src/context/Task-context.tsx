@@ -29,12 +29,13 @@ type TTaskContextType = {
     value: any
   ) => void;
   updateColorTheme: (colorTheme: string) => void;
+  setTextClass: () => string;
 };
 
 const TaskContext = createContext<TTaskContextType>(null!);
 
 export const TaskContextProvider = ({ children }: ITaskContextProps) => {
-  const { POMODORO } = timeSettings;
+  const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
   const [tasks, setTask] = useState<Task[]>(
     JSON.parse(localStorage.getItem("tasks") || "[]")
   );
@@ -87,6 +88,27 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
     [tasks]
   );
 
+  const setTextClass = (): string => {
+    let textColor: string = "";
+
+    switch (colorTheme) {
+      case POMODORO.color:
+        textColor = "text-main";
+        break;
+      case SHORT_BREAK.color:
+        textColor = "text-second";
+        break;
+      case LONG_BREAK.color:
+        textColor = "text-third";
+        break;
+      default:
+        textColor = "text-main";
+        break;
+    }
+
+    return textColor;
+  };
+
   const updateTaskItem = useCallback(
     <T extends keyof Task>(id: string, field: T, value: any): void => {
       setTask((currentTasks) => {
@@ -120,6 +142,7 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
         deleteTask,
         updateTaskItem,
         updateColorTheme,
+        setTextClass,
       }}
     >
       {children}

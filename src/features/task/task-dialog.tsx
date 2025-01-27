@@ -40,8 +40,13 @@ const formSchema = z.object({
 });
 
 const TaskDialog: FC = (): ReactElement => {
-  const { taskDialogOpen, addTask, openTaskDialog, closeTaskDialog } =
-    useTasks();
+  const {
+    taskDialogOpen,
+    addTask,
+    openTaskDialog,
+    closeTaskDialog,
+    setTextClass,
+  } = useTasks();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -78,7 +83,10 @@ const TaskDialog: FC = (): ReactElement => {
   return (
     <Dialog open={taskDialogOpen} onOpenChange={toggleDialog}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="text-[#ba4949]">
+        <Button
+          variant="secondary"
+          className={`text-lg p-5 font-semibold ${setTextClass()}`}
+        >
           Add Task
         </Button>
       </DialogTrigger>
