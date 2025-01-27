@@ -9,6 +9,12 @@ import {
 } from "react";
 import { timeSettings } from "../enums/time-settings";
 
+const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
+type TColorTheme =
+  | typeof POMODORO.color
+  | typeof SHORT_BREAK.color
+  | typeof LONG_BREAK.color;
+
 interface ITaskContextProps {
   children: ReactNode;
 }
@@ -28,20 +34,19 @@ type TTaskContextType = {
     field: T,
     value: any
   ) => void;
-  updateColorTheme: (colorTheme: string) => void;
+  updateColorTheme: (colorTheme: TColorTheme) => void;
   setTextClass: () => string;
 };
 
 const TaskContext = createContext<TTaskContextType>(null!);
 
 export const TaskContextProvider = ({ children }: ITaskContextProps) => {
-  const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
   const [tasks, setTask] = useState<Task[]>(
     JSON.parse(localStorage.getItem("tasks") || "[]")
   );
   const [taskDialogOpen, setTaskDialog] = useState<boolean>(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const [colorTheme, setColorTheme] = useState<string>(POMODORO.color);
+  const [colorTheme, setColorTheme] = useState<TColorTheme>(POMODORO.color);
 
   useEffect(() => {
     document.body.style.backgroundColor = colorTheme;
@@ -124,7 +129,7 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
     [tasks]
   );
 
-  const updateColorTheme = (color: string) => {
+  const updateColorTheme = (color: TColorTheme) => {
     setColorTheme(color);
   };
 
