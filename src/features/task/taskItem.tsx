@@ -92,9 +92,12 @@ const TaskItem: FC<TaskItemProps> = ({ task }: TaskItemProps): ReactElement => {
     return cardStyle;
   };
 
+  const setMainTask = () => {
+    selectTask(task);
+  };
   return (
     <>
-      <div className={setTaskStyle()} onClick={() => selectTask(task)}>
+      <div className={setTaskStyle()} onClick={() => setMainTask()}>
         <div className="flex justify-between">
           <h5 className="mb-2 text-2xl font-bold tracking-tight truncate text-gray-900 dark:text-white">
             {task.name}
