@@ -46,9 +46,11 @@ const Counter: FC = (): ReactElement => {
     if (workStatus == POMODORO.label) {
       setTimeRemaining(SHORT_BREAK.time);
       setWorkStatus(SHORT_BREAK.label);
+      updateColorTheme(SHORT_BREAK.color);
     } else {
       setTimeRemaining(POMODORO.time);
       setWorkStatus(POMODORO.label);
+      updateColorTheme(POMODORO.color);
     }
 
     if (selectedTask) {
