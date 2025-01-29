@@ -10,6 +10,7 @@ import {
   Portal,
 } from "@radix-ui/react-popover";
 import { useTasks } from "@/context/Task-context";
+import TaskAlert from "./task-alert";
 
 interface TaskItemProps {
   task: Task;
@@ -95,19 +96,22 @@ const TaskItem: FC<TaskItemProps> = ({ task }: TaskItemProps): ReactElement => {
   const setMainTask = () => {
     selectTask(task);
   };
+
   return (
     <>
-      <div className={setTaskStyle()} onClick={() => setMainTask()}>
-        <div className="flex justify-between">
-          <h5 className="mb-2 text-2xl font-bold tracking-tight truncate text-gray-900 dark:text-white">
-            {task.name}
-          </h5>
-          <div className="flex gap-4">
-            <p className="pt-2">{`${task.completedPomodoros} / ${task.pomodoros}`}</p>
-            <TaskActions taskId={task.id} />
+      <TaskAlert>
+        <div className={setTaskStyle()} onClick={() => setMainTask()}>
+          <div className="flex justify-between">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight truncate text-gray-900 dark:text-white">
+              {task.name}
+            </h5>
+            <div className="flex gap-4">
+              <p className="pt-2">{`${task.completedPomodoros} / ${task.pomodoros}`}</p>
+              <TaskActions taskId={task.id} />
+            </div>
           </div>
         </div>
-      </div>
+      </TaskAlert>
     </>
   );
 };
