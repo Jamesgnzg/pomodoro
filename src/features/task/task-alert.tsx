@@ -1,11 +1,4 @@
-import {
-  FC,
-  ReactElement,
-  ReactNode,
-  SyntheticEvent,
-  useEffect,
-  useState,
-} from "react";
+import { FC, ReactElement, ReactNode, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
