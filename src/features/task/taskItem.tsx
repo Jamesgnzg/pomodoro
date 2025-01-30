@@ -71,7 +71,7 @@ const TaskActions: FC<TaskActionsProps> = ({
 };
 
 const TaskItem: FC<TaskItemProps> = ({ task }: TaskItemProps): ReactElement => {
-  const { selectTask } = useTasks();
+  const { selectTask, timerRunning } = useTasks();
   const setTaskStyle = (): string => {
     let cardStyle =
       "mt-3 block max-w-sm p-6 border border-l-8 bg-white rounded-md shadow cursor-pointer transition delay-150 duration-500 ease-in-outbg-green-300 transform hover:-translate-y-1 hover:scale-110 ";
@@ -93,14 +93,16 @@ const TaskItem: FC<TaskItemProps> = ({ task }: TaskItemProps): ReactElement => {
     return cardStyle;
   };
 
-  const setMainTask = () => {
-    selectTask(task);
+  const setTask = () => {
+    if (!timerRunning) {
+      selectTask(task);
+    }
   };
 
   return (
     <>
-      <TaskAlert>
-        <div className={setTaskStyle()} onClick={() => setMainTask()}>
+      <TaskAlert task={task}>
+        <div className={setTaskStyle()} onClick={() => setTask()}>
           <div className="flex justify-between">
             <h5 className="mb-2 text-2xl font-bold tracking-tight truncate text-gray-900 dark:text-white">
               {task.name}
