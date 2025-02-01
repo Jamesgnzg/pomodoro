@@ -35,7 +35,10 @@ const Counter: FC = (): ReactElement => {
     updateColorTheme,
   } = useTasks();
   const { POMODORO, SHORT_BREAK, LONG_BREAK } = timeSettings;
-  const [timeRemaining, setTimeRemaining] = useState<number>(POMODORO.time);
+  const initialTime = localStorage.getItem("timeRemaining")
+    ? Number(localStorage.getItem("timeRemaining"))
+    : POMODORO.time;
+  const [timeRemaining, setTimeRemaining] = useState<number>(initialTime);
   const [workStatus, setWorkStatus] = useState<string>(POMODORO.label);
 
   const setTime = (time: number): void => {
@@ -72,7 +75,9 @@ const Counter: FC = (): ReactElement => {
           setTimer(false);
           return 0;
         } else {
-          return time - 1;
+          const remainingTime = time - 1;
+          localStorage.setItem("timeRemaining", remainingTime.toString());
+          return remainingTime;
         }
       });
     }, 1000);

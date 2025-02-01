@@ -46,7 +46,9 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
   const [tasks, setTask] = useState<Task[]>(
     JSON.parse(localStorage.getItem("tasks") || "[]")
   );
-  const [timerRunning, setTimer] = useState<boolean>(false);
+  const [timerRunning, setTimer] = useState<boolean>(
+    localStorage.getItem("timerRunning") == "true"
+  );
   const [taskDialogOpen, setTaskDialog] = useState<boolean>(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [colorTheme, setColorTheme] = useState<TColorTheme>(POMODORO.color);
@@ -58,6 +60,10 @@ export const TaskContextProvider = ({ children }: ITaskContextProps) => {
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    localStorage.setItem("timerRunning", timerRunning.toString());
+  }, [timerRunning]);
 
   const addTask = useCallback(
     (newTask: Task) => {
